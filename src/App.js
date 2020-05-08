@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import './assets/style.css';
 import quizService from "./quizService"
 import QuestionBox from "./components/QuestionBox"
-
+import Result from "./components/Result"
 class App extends Component {
 
 state = {
@@ -29,6 +29,14 @@ computeAnswer = (answer,correctAnswer) =>{
     responses:this.state.responses<5? this.state.responses+1 : 5
   })
 }
+playAgain =()=>{
+  this.getQuestions();
+  this.setState({
+    score:0,
+    responses:0
+  })
+
+}
 
 componentDidMount(){
  this.getQuestions();
@@ -52,7 +60,7 @@ componentDidMount(){
              selected = {answer => this.computeAnswer(answer,correct)}
              />)
              )}
-             {this.state.responses ===5? (<h2>{ this.state.score}</h2> ) : null}
+             {this.state.responses ===5? (<Result score={this.state.score} playAgain={this.playAgain}></Result>) : null}
       </div> 
     )
   }
